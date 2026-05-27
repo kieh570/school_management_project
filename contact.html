@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="bootstrap/style.css">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="bootstrap-icons-1.13.1/bootstrap-icons.css">
+    <title>Document</title>
+</head>
+<body>
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top py-2">
+        <div class="container">
+                <!--Brand-->
+                <a href="index.html" class="navbar-brand d-flex align-items-center fw-bold fs-4">
+                <span class=" text-white rounded-3 d-flex align-items-center justify-content-center me-2"
+                style="width: 42px; height: 42px; font-size: 1.4rem;"><img src="images/MDF_logo.jpg" alt="logo" style="width: 40px; height: auto; border-radius: 50%;"></span>
+                    Mother Dapae
+                </a>
+
+            <!--Toggler-->
+            <button class="navbar-toggler border-0" type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#schoolmenu"
+                    aria-controls="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+            </button>
+
+        <!--Menu-->
+        <div class="collapse navbar-collapse " id="schoolmenu">
+            <ul class="navbar-nav ms-auto align-items-lg-center fw-bold">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link px-3 fw-medium">Home</a>
+                </li>
+                <li class="nav-item drop-down">
+                    <a href="" class="nav-link dropdown-toggle px-3 fw-bold" role="button" data-bs-toggle="dropdown">
+                        Team
+                    </a>
+                     <ul class="dropdown-menu shadow border-0">
+                        <li><a href="administration.html" class="dropdown-item fw-bold text-primary">Administration</a></li>
+                        <li><a href="teaching_staff_.html" class="dropdown-item fw-bold text-primary">Teaching Staff</a></li>
+                        <li><a href="non_teaching_staff.html" class="dropdown-item fw-bold text-primary">Non Teaching Staff</a></li> 
+                   </ul>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="campus_life.html" class="nav-link px-3 fw-medium">Campus Life</a>
+                </li>
+                
+                
+                <li class="nav-item drop-down">
+                    <a href="" class="nav-link dropdown-toggle px-3 fw-bold" role="button" data-bs-toggle="dropdown">
+                        More
+                    </a>
+                    <ul class="dropdown-menu shadow border-0">
+                        <li><a href="student_login.html" class="dropdown-item fw-bold text-primary">Student Login</a></li>
+                        <li><a href="teacher_login.html" class="dropdown-item fw-bold text-primary">Teacher Login</a></li>
+                        <li><a href="admin_login.html" class="dropdown-item fw-bold text-primary">Admin Login</a></li> 
+                   </ul>
+                </li>
+                <!--CTA-->
+                <li class="nav-item ms-lg-3 mt-3 mt-lg-0">
+                    <a href="admission.html" class="btn btn-primary px-4 rounded-pill fw-medium">
+                        ADMISSION
+                    </a>
+                </li>
+            </ul>
+        </div>
+        </div>
+    </nav>
+
+
+
+</div>
+    
+
+
+    <div class="container" style="margin-top: 7rem;">
+       <hr> <h2 class="text-center text-primary" style="font-weight: 800;">Get in Touch</h2><hr>
+        <div class="row g-4 mt-3">
+
+             <div class="col-12 col-md-6 col-lg-6">
+                    <h4 class="fw-bold mb-3">Contact Information</h4>
+                    
+                        <p class="fw-bold text-primary"><i class="bi bi-geo-alt-fill"></i>&nbsp;Visit Us</p>
+                        <p class="text-muted">Mother Dapae Foundation <br> Maryland Avenue, Harper City <br>Maryland County-Liberia</p>
+                        <p class="fw-bold text-primary"><i class="bi bi-telephone-fill"></i>&nbsp;Call Us</p>
+                        <span class="fw-bold text-muted">+213 555 922 577</span><br>
+                        <span class="fw-bold text-muted" >+213 555 922 577</span><hr class="mb-4">
+            </div>
+           
+            
+                <div class="col-12 col-md-6 col-lg-6 g-3">
+                    <form action="" method="" class="form-control p-3 shadow-lg">
+                            <!--CONTACT FORMS-->
+                            <input type="text"  name="name" class="p-2 m-2 form-conrtol" placeholder="Your Full Name" style="width: 94%;
+                            border-radius: 10px; border: 1px solid #ddd; margin-left: auto; margin-right: auto">
+                            <input type="email" name="email" class="p-2 m-2 form-conrtol" placeholder="Email" style="width: 94%;
+                            border-radius: 10px; border: 1px solid #ddd; margin-left: auto; margin-right: auto;">
+                            <input type="number" name="contact" class="p-2 m-2 form-conrtol" placeholder="Phone Number" style="width: 94%;
+                            border-radius: 10px; border: 1px solid #ddd; margin-left: auto; margin-right: auto;">
+                            <input type="text" name="Subject" class="p-2 m-2 form-conrtol" placeholder="Subject" style="width: 94%;
+                            border-radius: 10px; border: 1px solid #ddd; margin-left: auto; margin-right: auto;">
+
+                        <textarea name="message" id="" class="form-control mb-3 mt-3" style="resize: none; height:100px;" placeholder="Type your message..."></textarea>
+                        <!--CONTACT FORM BUTTON-->
+                        <button class="btn mt-3 mb-3" type="submit" style="background-color: blue; color: white; 
+                        border-radius: 6px; border: none; font-weight: 800;
+                        margin-left: 2%;">Send</button> <button class="btn mt-3 mb-3" type="reset" style="background-color: red;
+                        color: white; border-radius: 6px; border: none; font-weight: 800; margin-left: 10px;">Reset</button>
+                    </form>
+                </div>
+        </div>
+    </div>
+
+    
+
+    
+   
+<script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
