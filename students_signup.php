@@ -1,131 +1,78 @@
-<?php
+<?php 
 require_once "db_connect/connection.php";
 
-// SECURITY HEADERS
-header("Content-Security-Policy: default-src 'self'");
-header("X-Frame-Options: DENY");
-header("X-XSS-Protection: 1; mode=block");
-header("X-Content-Type-Options: nosniff");
+    if(
+    !empty($_POST["first_name"]) &&
+    !empty($_POST["first_name"]) &&
+    !empty($_POST["dob"]) &&
+    !empty($_POST["pob"]) &&
+    !empty($_POST["address"]) &&
+    !empty($_POST["nationality"]) &&
+    !empty($_POST["contact"]) &&
+    !empty($_POST["email"]) &&
+    !empty($_POST["class"]) &&
+    !empty($_POST["signup_date"]) &&
+    !empty($_POST["password"]) &&
+    !empty($_POST["confirm_password"]) &&
+    !empty($_POST["gender"]) 
+    ){
+        $first_name = htmlspecialchars($_POST["first_name"]);
+        $middle_name = htmlspecialchars($_POST["middle_name"] ?? '');
+        $last_name = htmlspecialchars($_POST["last_name"]);
+        $dob = htmlspecialchars($_POST["dob"]);
+        $pob = htmlspecialchars($_POST["pob"]);
+        $address = htmlspecialchars($_POST["address"]);
+        $nationality = htmlspecialchars($_POST["nationality"]);
+        $contact = htmlspecialchars($_POST["contact"]);
+        $email = htmlspecialchars($_POST["email"]);
+        $class = htmlspecialchars($_POST["class"]);
+        $signup_date = htmlspecialchars($_POST["signup_date"]);
+        $password = htmlspecialchars($_POST["password"]);
+        $confirm_password = htmlspecialchars($_POST["confirm_password"]);
+        $gender = htmlspecialchars($_POST["gender"]);
 
-session_start();
-
-// Generate CSRF Token
-if (empty($_SESSION['csrf_token'])) {
-    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-}
-
-// ONLY PROCESS WHEN FORM IS SUBMITTED
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-    // CSRF Validation
-    /*if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
-        die("CSRF token validation failed.");
-    }*/
-
-    // INPUT SANITIZATION FUNCTION
-    function clean($data) {
-        return trim(htmlspecialchars(strip_tags($data ?? ''), ENT_QUOTES, 'UTF-8'));
-    }
-
-    $errors = [];
-
-    // REQUIRED FIELDS
-    $required = ['first_name', 'last_name', 'dob', 'pob', 'address', 'nationality', 
-                 'contact', 'email', 'password', 'confirm_password', 'gender'];
-
-    foreach ($required as $field) {
-        if (empty($_POST[$field])) {
-            $errors[] = ucfirst(str_replace('_', ' ', $field)) . " is required";
+        //OTHER VALIDATIONS
+        if($confirm_password !== $password){
+            echo "Password not match";
+            exit;
         }
-    }
 
-    // SANITIZE INPUTS
-    $first_name     = clean($_POST['first_name'] ?? '');
-    $middle_name    = clean($_POST['middle_name'] ?? '');
-    $last_name      = clean($_POST['last_name'] ?? '');
-    $dob            = clean($_POST['dob'] ?? '');
-    $pob            = clean($_POST['pob'] ?? '');
-    $address        = clean($_POST['address'] ?? '');
-    $nationality    = clean($_POST['nationality'] ?? '');
-    $contact        = clean($_POST['contact'] ?? '');
-    $email          = filter_var($_POST['email'] ?? '', FILTER_SANITIZE_EMAIL);
-    $signup_date    = !empty($_POST['signup_date']) ? clean($_POST['signup_date']) : date('Y-m-d');
-    $password       = $_POST['password'] ?? '';           // Do not clean raw password
-    $confirm_password = $_POST['confirm_password'] ?? '';
-    $gender         = clean($_POST['gender'] ?? '');
-
-    // SERVER-SIDE VALIDATIONS
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $errors[] = "Invalid Email Format";
-    }
-
-    if (strlen($password) < 6) {
-        $errors[] = "Password must be at least 6 characters long";
-    }
-
-    if ($password !== $confirm_password) {
-        $errors[] = "Passwords did not match";
-    }
-
-    if (!preg_match("/^[a-zA-Z\s'-]+$/", $first_name)) {
-        $errors[] = "First name contains invalid characters";
-    }
-
-    if (!empty($dob) && !strtotime($dob)) {
-        $errors[] = "Invalid Date of Birth";
-    }
-
-    // If there are errors, show them and stop
-    if (!empty($errors)) {
-        echo "<div style='color:red; padding:15px; background:#ffe6e6; border:1px solid red; margin:10px 0;'>";
-        foreach ($errors as $err) {
-            echo "• " . $err . "<br>";
+        if(strlen($password) < 6){
+            echo "Password too short";
+            exit;
         }
-        echo "</div>";
-        // Do NOT exit here if you want to show the form again
-    } 
-    else {
-        // === PROCESS REGISTRATION ===
 
-        // Generate Unique Student ID
-        function generateUniqueStudentID($conn) {
-            $attempts = 0;
+        $specialchar = "/*@#$%^.,^><?";
+
+        if(!preg_match($password, $specialchar)){
+            echo "Password must contain special characters";
+            exit;
+        }
+
+        if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+            echo "Invalid email format";
+            exit;
+        }
+
+        $contact = preg_replace('/\s=/', '', $__POST['contact']);
+
+        if(preg_match('/^(0(77|88|55|60)\d{7}|\+231(77|88|55|60)\d{7})$/', $contact)){
+            echo "Incorrect contact format";
+            exit;
+        }
+
+        /*function generateStudentID($conn){
             do {
-                $id = rand(10000000, 99999999); // 8 digits
-                $stmt = $conn->prepare("SELECT id FROM students_table WHERE id = ?");
-                $stmt->execute([$id]);
-                $attempts++;
-                if ($attempts > 50) {
-                    die("Could not generate unique Student ID.");
-                }
-            } while ($stmt->rowCount() > 0);
-            return $id;
-        }
+                $id = mt_rand(100000, 999);
+                $stmt = $conn->prepare("SELECT")
+            }
+        }*/
 
-        $id = generateUniqueStudentID($conn);
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-        // Insert into database
-        $stmt = $conn->prepare("INSERT INTO students_table 
-            (id, first_name, middle_name, last_name, dob, pob, address, nationality, 
-             contact, email, signup_date, password, gender) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-        $success = $stmt->execute([
-            $id, $first_name, $middle_name, $last_name, $dob, $pob, $address, 
-            $nationality, $contact, $email, $signup_date, $hashed_password, $gender
-        ]);
 
-        if ($success) {
-            echo "<div style='color:green; padding:20px; background:#e6ffe6; border:1px solid green; margin:10px 0;'>
-                    <h3>Signup Successful!</h3>
-                    <p>Your Student ID: <strong>$id</strong></p>
-                  </div>";
-        } else {
-            echo "<div style='color:red; padding:15px; background:#ffe6e6;'>Signup Failed! Please try again.</div>";
-        }
+
+    } else {
+        echo "Please fill in all inputs";
     }
-}
 ?>
-
-<!-- Your HTML Form should be here below this PHP code -->

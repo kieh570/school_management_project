@@ -1,0 +1,33 @@
+# XAMPP / Server stuff
+/vender/
+/node_modules/
+.env
+*.log
+.Ds_Store
+Thumbs.db
+
+#Uploads & User files - don't track these
+/Uploads/
+/images/Uploads/
+/assets/Uploads
+
+# Cache & Temp files
+/cache/
+/tmp/
+/temp/
+/*.cache
+
+# Database files - Never commit these
+*.sqlite
+*.db
+*.sql
+!seed.sql
+
+#IDE stuff
+.vscode/
+.idea/
+*.swap
+
+# OS junk
+.Ds_Store
+Thumbs.db
